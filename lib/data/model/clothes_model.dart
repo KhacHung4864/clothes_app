@@ -54,10 +54,10 @@ class ClothItem {
     _data["item_id"] = itemId;
     _data["name"] = name;
     _data["rating"] = rating;
-    _data["tags"] = tags;
+    _data["tags"] = tags.toString();
     _data["price"] = price;
-    _data["sizes"] = sizes;
-    _data["colors"] = colors;
+    _data["sizes"] = sizes.toString();
+    _data["colors"] = colors.toString();
     _data["description"] = description;
     _data["image"] = image;
     return _data;

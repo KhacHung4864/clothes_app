@@ -227,7 +227,7 @@ class ItemDetailScreen extends GetView<ItemDetailController> {
       runSpacing: 8.sp,
       spacing: 8.sp,
       children: List.generate(
-        controller.clothItem.colors!.length,
+        controller.clothItem.sizes!.length,
         (index) {
           return Obx(
             () => GestureDetector(
