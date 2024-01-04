@@ -246,6 +246,7 @@ class AdminUploadItemsScreen extends GetView<AdminUploadItemsController> {
 
                           //item description
                           TextFormFieldWidget(
+                            maxline: 3,
                             title: 'Item description...',
                             controller: controller.descriptionController,
                             icon: Icons.description,

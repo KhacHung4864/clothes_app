@@ -15,6 +15,7 @@ class DashboardFragmentsScreen extends GetView<DashboardFragmentsController> {
             currentIndex: controller.currentIndexs.value,
             onTap: (value) {
               controller.currentIndexs.value = value;
+              controller.tabBottomBar();
             },
             showSelectedLabels: true,
             showUnselectedLabels: true,

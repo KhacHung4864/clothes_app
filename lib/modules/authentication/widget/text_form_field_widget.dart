@@ -10,8 +10,9 @@ class TextFormFieldWidget extends StatefulWidget {
     required this.validator,
     required this.title,
     this.keyboardType,
+    this.maxline,
   });
-
+  final int? maxline;
   final String title;
   final TextEditingController controller;
   final IconData icon;

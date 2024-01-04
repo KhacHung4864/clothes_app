@@ -56,6 +56,20 @@ class DashboardFragmentsController extends GetxController {
     super.onInit();
   }
 
+  tabBottomBar() {
+    // if (currentIndexs.value == 0) {
+    //   if (Get.isRegistered<HomeController>() == false) {
+    //     Get.lazyPut<HomeController>(() => HomeController());
+
+    //   }
+    // }
+    // if (currentIndexs.value == 3) {
+    //   if (Get.isRegistered<ProfileController>() == false) {
+    //     Get.lazyPut<ProfileController>(() => ProfileController());
+    //   }
+    // }
+  }
+
   void getUserData() async {
     String? token = AppStorage().getString(SKeys.tokenUser);
     if (token != null && token.isNotEmpty) {
