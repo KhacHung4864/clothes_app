@@ -71,7 +71,7 @@ class CartData {
     sizes = json["sizes"].toString().split(', ');
     colors = json["colors"].toString().split(', ');
     description = json["description"];
-    image = json["image "];
+    image = json["image"];
   }
 
   Map<String, dynamic> toJson() {
