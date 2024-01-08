@@ -17,6 +17,7 @@ class CartController extends GetxController {
   RxList<int> selectedItemList = <int>[].obs;
   RxBool isSelectedAll = false.obs;
   RxDouble total = 0.0.obs;
+  RxBool isLoading = false.obs;
 
   @override
   void onInit() async {
@@ -57,6 +58,8 @@ class CartController extends GetxController {
   }
 
   getCartList() async {
+    isLoading.value = true;
+    cartList.value = [];
     int currentUserId = int.parse(dashboardFragmentsController.currentUser.value!.userId!);
     String? token = AppStorage().getString(SKeys.tokenUser);
     try {
@@ -66,7 +69,50 @@ class CartController extends GetxController {
         if (resData.status == 'success') {
           resData.data?.forEach((record) {
             cartList.add(record);
+            calculateTotalAmount();
           });
+        } else {
+          showError(resData.message);
+        }
+      } else {
+        showError(resData.message);
+      }
+    } on DioException catch (e) {
+      final ApiException apiException = ApiException.fromDioError(e);
+      throw apiException;
+    } finally {
+      isLoading.value = false;
+    }
+  }
+
+  updateQuantityInUserCart(int? cartId, int? quantity) async {
+    String? token = AppStorage().getString(SKeys.tokenUser);
+    try {
+      final response = await _cartApi.callUpdateCartItem(data: {'token': token, 'cart_id': cartId, 'quantity': quantity});
+      CartModel resData = CartModel.fromJson(jsonDecode(response.data));
+      if (response.statusCode == 200) {
+        if (resData.status == 'success') {
+          getCartList();
+        } else {
+          showError(resData.message);
+        }
+      } else {
+        showError(resData.message);
+      }
+    } on DioException catch (e) {
+      final ApiException apiException = ApiException.fromDioError(e);
+      throw apiException;
+    }
+  }
+
+  deleteSelectedItemsFromUserCartList(int? cartId) async {
+    String? token = AppStorage().getString(SKeys.tokenUser);
+    try {
+      final response = await _cartApi.callDeleteCartItem(data: {'token': token, 'cart_id': cartId});
+      CartModel resData = CartModel.fromJson(jsonDecode(response.data));
+      if (response.statusCode == 200) {
+        if (resData.status == 'success') {
+          getCartList();
         } else {
           showError(resData.message);
         }

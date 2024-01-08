@@ -69,9 +69,10 @@ class ApiService {
     CancelToken? cancelToken,
     ProgressCallback? onSendProgress,
     ProgressCallback? onReceiveProgress,
+    bool isShowLoading = true,
   }) async {
     try {
-      EasyLoading.show(status: 'Loading...');
+      if (isShowLoading) EasyLoading.show(status: 'Loading...');
       await Future.delayed(const Duration(milliseconds: 200));
       final Response response = await _dio.post(
         url,
@@ -82,7 +83,7 @@ class ApiService {
         onSendProgress: onSendProgress,
         onReceiveProgress: onReceiveProgress,
       );
-      EasyLoading.dismiss();
+      if (isShowLoading) EasyLoading.dismiss();
       return response;
     } catch (e) {
       rethrow;

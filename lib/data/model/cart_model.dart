@@ -58,7 +58,7 @@ class CartData {
   });
 
   CartData.fromJson(Map<String, dynamic> json) {
-    cartId = int.parse(json["user_id"]);
+    cartId = int.parse(json["cart_id"]);
     userId = int.parse(json["user_id"]);
     itemId = int.parse(json["item_id"]);
     quantity = int.parse(json["quantity"]);

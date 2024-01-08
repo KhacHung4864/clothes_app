@@ -28,4 +28,30 @@ class CartApi {
       rethrow;
     }
   }
+
+  Future<Response> callUpdateCartItem({Map<String, dynamic>? data}) async {
+    try {
+      final Response response = await _apiService.post(
+        AppUrl.updateCartItem,
+        data: data,
+        isShowLoading: false,
+      );
+      return response;
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  Future<Response> callDeleteCartItem({Map<String, dynamic>? data}) async {
+    try {
+      final Response response = await _apiService.post(
+        AppUrl.deleteCartItem,
+        data: data,
+        isShowLoading: false,
+      );
+      return response;
+    } catch (e) {
+      rethrow;
+    }
+  }
 }

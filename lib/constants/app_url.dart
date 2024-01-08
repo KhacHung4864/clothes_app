@@ -41,4 +41,8 @@ class AppUrl {
   static const String additem = '$cart/add.php';
 
   static const String cartList = '$cart/read.php';
+
+  static const String updateCartItem = '$cart/update.php';
+
+  static const String deleteCartItem = '$cart/delete.php';
 }
