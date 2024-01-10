@@ -9,4 +9,5 @@ class Routes {
   static const home = '/home';
   static const itemDetails = '/itemDetails';
   static const cart = '/cart';
+  static const searchSreen = '/searchSreen';
 }

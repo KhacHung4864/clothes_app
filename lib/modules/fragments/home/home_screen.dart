@@ -14,107 +14,73 @@ class HomeScreen extends GetView<HomeController> {
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      child: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 10.w),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            SizedBox(height: 16.h),
-            //search bar widget
-            showSearchBarWidget(),
+    return RefreshIndicator(
+      onRefresh: () async {
+        await controller.initData();
+      },
+      child: SingleChildScrollView(
+        child: Padding(
+            padding: EdgeInsets.symmetric(horizontal: 10.w),
+            child: Obx(
+              () => Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  SizedBox(height: 16.h),
+                  //search bar widget
+                  showSearchBarWidget(),
 
-            SizedBox(height: 24.h),
+                  SizedBox(height: 24.h),
 
-            //trending-popular items
-            Text(
-              'Trending',
-              style: AppFont.t.s(24).bold.purpleAccent,
-            ),
+                  //trending-popular items
+                  Text(
+                    'Trending',
+                    style: AppFont.t.s(24).bold.purpleAccent,
+                  ),
 
-            _trendingClothItemsWidget(),
+                  _trendingClothItemsWidget(),
 
-            SizedBox(height: 24.h),
+                  SizedBox(height: 24.h),
 
-            //all new collection items
-            Text(
-              'New Collection',
-              style: AppFont.t.s(24).bold.purpleAccent,
-            ),
+                  //all new collection items
+                  Text(
+                    'New Collection',
+                    style: AppFont.t.s(24).bold.purpleAccent,
+                  ),
 
-            _allClothItemsWidget()
-          ],
-        ),
+                  _allClothItemsWidget()
+                ],
+              ),
+            )),
       ),
     );
   }
 
-  FutureBuilder<List<ClothItem>> _trendingClothItemsWidget() {
-    return FutureBuilder(
-      future: controller.getTrendingClothItems(),
-      builder: (context, AsyncSnapshot<List<ClothItem>> dataSnapShot) {
-        if (dataSnapShot.connectionState == ConnectionState.waiting) {
-          return const Center(
-            child: CircularProgressIndicator(),
-          );
-        }
-        if (dataSnapShot.data == null) {
-          return Center(
-            child: Text('No Trending item found', style: AppFont.t),
-          );
-        }
-        if (dataSnapShot.data!.isNotEmpty) {
-          return SizedBox(
-            height: 260.h,
-            child: ListView.builder(
-              itemCount: dataSnapShot.data!.length,
-              scrollDirection: Axis.horizontal,
-              itemBuilder: (context, index) {
-                return _trendingClothesItem(index, dataSnapShot);
-              },
-            ),
-          );
-        }
-        return Center(
-          child: Text('Empty, No Data.', style: AppFont.t),
-        );
+  Widget _trendingClothItemsWidget() {
+    return SizedBox(
+      height: 260.h,
+      child: ListView.builder(
+        itemCount: controller.listTrendingClothItems.length,
+        scrollDirection: Axis.horizontal,
+        itemBuilder: (context, index) {
+          return _trendingClothesItem(index, controller.listTrendingClothItems);
+        },
+      ),
+    );
+  }
+
+  Widget _allClothItemsWidget() {
+    return ListView.builder(
+      itemCount: controller.listAllClothItems.length,
+      shrinkWrap: true,
+      physics: const NeverScrollableScrollPhysics(),
+      itemBuilder: (context, index) {
+        return _allClothesItem(index, controller.listAllClothItems);
       },
     );
   }
 
-  FutureBuilder<List<ClothItem>> _allClothItemsWidget() {
-    return FutureBuilder(
-      future: controller.getAllClothItems(),
-      builder: (context, AsyncSnapshot<List<ClothItem>> dataSnapShot) {
-        if (dataSnapShot.connectionState == ConnectionState.waiting) {
-          return const Center(
-            child: CircularProgressIndicator(),
-          );
-        }
-        if (dataSnapShot.data == null) {
-          return Center(
-            child: Text('No Trending item found', style: AppFont.t),
-          );
-        }
-        if (dataSnapShot.data!.isNotEmpty) {
-          return ListView.builder(
-            itemCount: dataSnapShot.data!.length,
-            shrinkWrap: true,
-            physics: const NeverScrollableScrollPhysics(),
-            itemBuilder: (context, index) {
-              return _allClothesItem(index, dataSnapShot);
-            },
-          );
-        }
-        return Center(
-          child: Text('Empty, No Data.', style: AppFont.t),
-        );
-      },
-    );
-  }
-
-  Widget _allClothesItem(int index, AsyncSnapshot<List<ClothItem>> dataSnapShot) {
-    ClothItem clothItem = dataSnapShot.data![index];
+  Widget _allClothesItem(int index, RxList<ClothItem> listAllClothItems) {
+    ClothItem clothItem = listAllClothItems[index];
     return GestureDetector(
       onTap: () {
         Get.toNamed(Routes.itemDetails, arguments: clothItem);
@@ -125,7 +91,7 @@ class HomeScreen extends GetView<HomeController> {
           0,
           index == 0 ? 16 : 8,
           0,
-          index == dataSnapShot.data!.length - 1 ? 16 : 8,
+          index == listAllClothItems.length - 1 ? 16 : 8,
         ),
         decoration: BoxDecoration(
           color: Palette.black,
@@ -205,8 +171,8 @@ class HomeScreen extends GetView<HomeController> {
     );
   }
 
-  Widget _trendingClothesItem(int index, AsyncSnapshot<List<ClothItem>> dataSnapShot) {
-    ClothItem clothItem = dataSnapShot.data![index];
+  Widget _trendingClothesItem(int index, RxList<ClothItem> listAllClothItems) {
+    ClothItem clothItem = listAllClothItems[index];
     return GestureDetector(
       onTap: () {
         Get.toNamed(Routes.itemDetails, arguments: clothItem);
@@ -216,7 +182,7 @@ class HomeScreen extends GetView<HomeController> {
         margin: EdgeInsets.fromLTRB(
           index == 0 ? 16 : 8,
           10,
-          index == dataSnapShot.data!.length - 1 ? 16 : 8,
+          index == listAllClothItems.length - 1 ? 16 : 8,
           10,
         ),
         decoration: BoxDecoration(
@@ -314,7 +280,9 @@ class HomeScreen extends GetView<HomeController> {
       controller: controller.searchController,
       decoration: InputDecoration(
         prefixIcon: IconButton(
-          onPressed: () {},
+          onPressed: () {
+            Get.toNamed(Routes.searchSreen, arguments: controller.searchController.text.trim());
+          },
           icon: const Icon(
             Icons.search,
             color: Palette.purpleAccent,

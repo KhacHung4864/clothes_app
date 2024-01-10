@@ -28,6 +28,8 @@ class AppUrl {
 
   static const String uploadNewItem = '$items/upload.php';
 
+  static const String searchItem = '$items/search.php';
+
   //clothes url
   static const String clothes = "$baseUrl/clothes";
 
@@ -45,4 +47,15 @@ class AppUrl {
   static const String updateCartItem = '$cart/update.php';
 
   static const String deleteCartItem = '$cart/delete.php';
+
+  //favorite
+  static const String favorite = "$baseUrl/favorite";
+
+  static const String addFavorite = "$favorite/add.php";
+
+  static const String deleteFavorite = '$favorite/delete.php';
+
+  static const String validateFavorite = '$favorite/validate_favorite.php';
+
+  static const String readFavorite = '$favorite/read.php';
 }

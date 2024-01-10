@@ -12,8 +12,7 @@ import 'package:clothes_app/utils/share_components/dialog/dialog.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:get/get_rx/src/rx_types/rx_types.dart';
-import 'package:get/get_state_manager/src/simple/get_controllers.dart';
+import 'package:get/get.dart';
 
 class DashboardFragmentsController extends GetxController {
   DashboardFragmentsController();
@@ -21,6 +20,8 @@ class DashboardFragmentsController extends GetxController {
 
   final Rx<UserData?> currentUser = UserData().obs;
   Rx<int> currentIndexs = 0.obs;
+  Rx<int> backButtonPressCount = 0.obs;
+
   List<Widget> fragmentScreen = [
     const HomeScreen(),
     const FavoritesScreen(),

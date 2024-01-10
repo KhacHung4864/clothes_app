@@ -22,6 +22,19 @@ class ClothesApi {
       final Response response = await _apiService.post(
         AppUrl.newClothes,
         data: data,
+        isShowLoading: false,
+      );
+      return response;
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  Future<Response> callsearchItem({Map<String, dynamic>? data}) async {
+    try {
+      final Response response = await _apiService.post(
+        AppUrl.searchItem,
+        data: data,
       );
       return response;
     } catch (e) {

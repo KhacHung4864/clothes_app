@@ -10,6 +10,7 @@ import 'package:clothes_app/modules/cart/cart_screen.dart';
 import 'package:clothes_app/modules/fragments/dashboard_fragments_binding.dart';
 import 'package:clothes_app/modules/fragments/dashboard_fragments_screen.dart';
 import 'package:clothes_app/modules/item/item_details_screen.dart';
+import 'package:clothes_app/modules/item/search_item/search_item_screen.dart';
 import 'package:clothes_app/routes/app_pages.dart';
 import 'package:get/get_navigation/src/routes/get_route.dart';
 
@@ -55,6 +56,11 @@ class AppPages {
     GetPage(
       name: Routes.cart,
       page: () => const CartScreen(),
+      binding: DashboardFragmentsBinding(),
+    ),
+    GetPage(
+      name: Routes.searchSreen,
+      page: () => const SearchScreen(),
       binding: DashboardFragmentsBinding(),
     )
   ];

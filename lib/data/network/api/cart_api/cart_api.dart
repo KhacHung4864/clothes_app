@@ -54,4 +54,56 @@ class CartApi {
       rethrow;
     }
   }
+
+  Future<Response> callValidateFavorite({Map<String, dynamic>? data}) async {
+    try {
+      final Response response = await _apiService.post(
+        AppUrl.validateFavorite,
+        data: data,
+        isShowLoading: false,
+      );
+      return response;
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  Future<Response> callAddFavorite({Map<String, dynamic>? data}) async {
+    try {
+      final Response response = await _apiService.post(
+        AppUrl.addFavorite,
+        data: data,
+        isShowLoading: false,
+      );
+      return response;
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  Future<Response> callDeleteFavorite({Map<String, dynamic>? data}) async {
+    try {
+      final Response response = await _apiService.post(
+        AppUrl.deleteFavorite,
+        data: data,
+        isShowLoading: false,
+      );
+      return response;
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  Future<Response> callFavoriteList({Map<String, dynamic>? data, bool isShowLoading = true}) async {
+    try {
+      final Response response = await _apiService.post(
+        AppUrl.readFavorite,
+        data: data,
+        isShowLoading: isShowLoading,
+      );
+      return response;
+    } catch (e) {
+      rethrow;
+    }
+  }
 }

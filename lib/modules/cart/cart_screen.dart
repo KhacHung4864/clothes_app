@@ -1,5 +1,6 @@
 import 'package:clothes_app/configs/app_fonts.dart';
 import 'package:clothes_app/configs/palette.dart';
+import 'package:clothes_app/gen/assets.gen.dart';
 import 'package:clothes_app/modules/cart/cart_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -97,7 +98,7 @@ class CartScreen extends GetView<CartController> {
               ? Center(
                   child: Text(
                     'Cart is Empty',
-                    style: AppFont.t.purpleAccent.s(20),
+                    style: AppFont.t.grey.s(15),
                   ),
                 )
               : ListView.builder(
@@ -290,14 +291,13 @@ class CartScreen extends GetView<CartController> {
                 height: 185,
                 width: 150,
                 fit: BoxFit.cover,
-                placeholder: const AssetImage("images/place_holder.png"),
-                image: NetworkImage(
-                  controller.cartList[index].image ?? '',
-                ),
-                imageErrorBuilder: (context, error, stackTraceError) {
+                placeholder: Assets.images.placeHolder.provider(),
+                image: NetworkImage(controller.cartList[index].image ?? ''),
+                imageErrorBuilder: (context, error, stackTrace) {
                   return const Center(
                     child: Icon(
                       Icons.broken_image_outlined,
+                      color: Palette.white,
                     ),
                   );
                 },

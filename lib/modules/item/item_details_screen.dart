@@ -2,6 +2,7 @@ import 'package:clothes_app/configs/app_fonts.dart';
 import 'package:clothes_app/configs/palette.dart';
 import 'package:clothes_app/gen/assets.gen.dart';
 import 'package:clothes_app/modules/item/item_details_controller.dart';
+import 'package:clothes_app/routes/app_pages.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -14,124 +15,179 @@ class ItemDetailScreen extends GetView<ItemDetailController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        backgroundColor: Palette.black,
         body: Stack(
-      children: [
-        //item_image
-        FadeInImage(
-          height: 0.5.sh,
-          width: 1.sw,
-          fit: BoxFit.contain,
-          placeholder: Assets.images.placeHolder.provider(),
-          image: NetworkImage(controller.clothItem.image ?? ''),
-          imageErrorBuilder: (context, error, stackTrace) {
-            return const Center(
-              child: Icon(
-                Icons.broken_image_outlined,
-                color: Palette.white,
-              ),
-            );
-          },
-        ),
-
-        //item information
-        Align(
-          alignment: Alignment.bottomCenter,
-          child: Container(
-            height: 0.6.sh,
-            width: 1.sw,
-            padding: EdgeInsets.symmetric(horizontal: 16.w),
-            decoration: BoxDecoration(
-              color: Palette.black,
-              borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(30.sp),
-                topRight: Radius.circular(30.sp),
-              ),
-              boxShadow: const [
-                BoxShadow(
-                  offset: Offset(0, -3),
-                  blurRadius: 6,
-                  color: Palette.purpleAccent,
-                ),
-              ],
+          children: [
+            //item_image
+            FadeInImage(
+              height: 0.5.sh,
+              width: 1.sw,
+              fit: BoxFit.contain,
+              placeholder: Assets.images.placeHolder.provider(),
+              image: NetworkImage(controller.clothItem.image ?? ''),
+              imageErrorBuilder: (context, error, stackTrace) {
+                return const Center(
+                  child: Icon(
+                    Icons.broken_image_outlined,
+                    color: Palette.white,
+                  ),
+                );
+              },
             ),
-            child: SingleChildScrollView(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  SizedBox(height: 18.h),
-                  //item image
-                  Center(
-                    child: Container(
-                      height: 8.h,
-                      width: 140.w,
-                      decoration: BoxDecoration(
-                        color: Palette.purpleAccent,
-                        borderRadius: BorderRadius.circular(30.sp),
-                      ),
+
+            //item information
+            Align(
+              alignment: Alignment.bottomCenter,
+              child: Container(
+                height: 0.6.sh,
+                width: 1.sw,
+                padding: EdgeInsets.symmetric(horizontal: 16.w),
+                decoration: BoxDecoration(
+                  color: Palette.black,
+                  borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(30.sp),
+                    topRight: Radius.circular(30.sp),
+                  ),
+                  boxShadow: const [
+                    BoxShadow(
+                      offset: Offset(0, -3),
+                      blurRadius: 6,
+                      color: Palette.purpleAccent,
                     ),
-                  ),
-                  SizedBox(height: 30.h),
-                  //item name
-                  Text(
-                    controller.clothItem.name ?? '',
-                    style: AppFont.t.purpleAccent.s(24).bold,
-                    maxLines: 2,
-                    overflow: TextOverflow.ellipsis,
-                  ),
-                  SizedBox(height: 10.h),
-                  Row(
+                  ],
+                ),
+                child: SingleChildScrollView(
+                  child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      //rating + tag + price
-                      _detailInfor(),
+                      SizedBox(height: 18.h),
+                      //item image
+                      Center(
+                        child: Container(
+                          height: 8.h,
+                          width: 140.w,
+                          decoration: BoxDecoration(
+                            color: Palette.purpleAccent,
+                            borderRadius: BorderRadius.circular(30.sp),
+                          ),
+                        ),
+                      ),
+                      SizedBox(height: 30.h),
+                      //item name
+                      Text(
+                        controller.clothItem.name ?? '',
+                        style: AppFont.t.purpleAccent.s(24).bold,
+                        maxLines: 2,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                      SizedBox(height: 10.h),
+                      Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          //rating + tag + price
+                          _detailInfor(),
 
-                      //quantity item counter
-                      _quantityItemCounter(),
+                          //quantity item counter
+                          _quantityItemCounter(),
+                        ],
+                      ),
+
+                      //size
+                      Text(
+                        'Size',
+                        style: AppFont.t.purpleAccent.s(18).bold,
+                      ),
+                      SizedBox(height: 8.h),
+                      _choseSize(),
+                      SizedBox(height: 20.h),
+
+                      //color
+                      Text(
+                        'Color',
+                        style: AppFont.t.purpleAccent.s(18).bold,
+                      ),
+                      SizedBox(height: 8.h),
+                      _choseColor(),
+                      SizedBox(height: 20.h),
+
+                      //description
+                      Text(
+                        'Description',
+                        style: AppFont.t.purpleAccent.s(18).bold,
+                      ),
+                      SizedBox(height: 8.h),
+                      Text(
+                        controller.clothItem.description ?? '',
+                        textAlign: TextAlign.justify,
+                        style: AppFont.t.grey,
+                      ),
+                      SizedBox(height: 30.h),
+
+                      //add to cart button
+                      _btnAddToCart(),
+
+                      SizedBox(height: 30.h),
                     ],
                   ),
-
-                  //size
-                  Text(
-                    'Size',
-                    style: AppFont.t.purpleAccent.s(18).bold,
-                  ),
-                  SizedBox(height: 8.h),
-                  _choseSize(),
-                  SizedBox(height: 20.h),
-
-                  //color
-                  Text(
-                    'Color',
-                    style: AppFont.t.purpleAccent.s(18).bold,
-                  ),
-                  SizedBox(height: 8.h),
-                  _choseColor(),
-                  SizedBox(height: 20.h),
-
-                  //description
-                  Text(
-                    'Description',
-                    style: AppFont.t.purpleAccent.s(18).bold,
-                  ),
-                  SizedBox(height: 8.h),
-                  Text(
-                    controller.clothItem.description ?? '',
-                    textAlign: TextAlign.justify,
-                    style: AppFont.t.grey,
-                  ),
-                  SizedBox(height: 30.h),
-
-                  //add to cart button
-                  _btnAddToCart(),
-
-                  SizedBox(height: 30.h),
-                ],
+                ),
               ),
             ),
-          ),
-        )
-      ],
-    ));
+            //3 button favorite - shopping cart - back
+            Positioned(
+              top: MediaQuery.of(context).padding.top,
+              left: 0,
+              right: 0,
+              child: Container(
+                color: Colors.transparent,
+                child: Row(
+                  children: [
+                    //back
+                    IconButton(
+                      onPressed: () {
+                        Get.back();
+                        controller.favoritesController.initData(isShowLoading: false);
+                      },
+                      icon: const Icon(
+                        Icons.arrow_back,
+                        color: Colors.purpleAccent,
+                      ),
+                    ),
+
+                    const Spacer(),
+
+                    //favorite
+                    Obx(() => IconButton(
+                          onPressed: () {
+                            if (controller.isFavorite.value) {
+                              //delete item from favorites
+                              controller.deleteItemFromFavoriteList();
+                            } else {
+                              //save item to user favorites
+                              controller.addItemToFavoriteList();
+                            }
+                          },
+                          icon: Icon(
+                            controller.isFavorite.value ? Icons.bookmark : Icons.bookmark_border_outlined,
+                            color: Colors.purpleAccent,
+                          ),
+                        )),
+
+                    //shopping cart icon
+                    IconButton(
+                      onPressed: () {
+                        Get.toNamed(Routes.cart);
+                      },
+                      icon: const Icon(
+                        Icons.shopping_cart,
+                        color: Colors.purpleAccent,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ],
+        ));
   }
 
   Material _btnAddToCart() {
@@ -141,13 +197,7 @@ class ItemDetailScreen extends GetView<ItemDetailController> {
       borderRadius: BorderRadius.circular(20),
       child: InkWell(
         onTap: () {
-          controller.addItemToCart(
-            int.parse(controller.dashboardFragmentsController.currentUser.value!.userId!),
-            controller.clothItem.itemId!,
-            controller.quantityItem.value,
-            controller.clothItem.colors![controller.colorItem.value].replaceAll('[', '').replaceAll(']', ''),
-            controller.clothItem.sizes![controller.sizeItem.value].replaceAll('[', '').replaceAll(']', ''),
-          );
+          controller.addItemToCart();
         },
         borderRadius: BorderRadius.circular(20),
         child: Container(

@@ -1,4 +1,5 @@
 import 'package:clothes_app/modules/cart/cart_controller.dart';
+import 'package:clothes_app/modules/item/search_item/search_item_controller.dart';
 import 'package:get/get.dart';
 
 import '../item/item_details_controller.dart';
@@ -28,6 +29,9 @@ class DashboardFragmentsBinding extends Bindings {
     //Item Detail
 
     Get.lazyPut<ItemDetailController>(() => ItemDetailController());
+
+    //search item
+    Get.lazyPut<SearchItemController>(() => SearchItemController());
 
     //Cart
     Get.lazyPut<CartController>(() => CartController());

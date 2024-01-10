@@ -73,7 +73,7 @@ class ApiService {
   }) async {
     try {
       if (isShowLoading) EasyLoading.show(status: 'Loading...');
-      await Future.delayed(const Duration(milliseconds: 200));
+      if (isShowLoading) await Future.delayed(const Duration(milliseconds: 200));
       final Response response = await _dio.post(
         url,
         data: data,

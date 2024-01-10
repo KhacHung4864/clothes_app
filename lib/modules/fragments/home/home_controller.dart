@@ -7,15 +7,31 @@ import 'package:clothes_app/data/network/service/api_exception.dart';
 import 'package:clothes_app/utils/share_components/dialog/dialog.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get_state_manager/src/simple/get_controllers.dart';
+import 'package:get/get.dart';
 
 class HomeController extends GetxController {
   HomeController();
   final ClothesApi _clothesApi = ClothesApi();
   TextEditingController searchController = TextEditingController();
+  RxList<ClothItem> listAllClothItems = <ClothItem>[].obs;
+
+  RxList<ClothItem> listTrendingClothItems = <ClothItem>[].obs;
+
+  @override
+  void onInit() {
+    initData();
+    super.onInit();
+  }
+
+  Future<void> initData() async {
+    await Future.wait([
+      getTrendingClothItems(),
+      getAllClothItems(),
+    ]);
+  }
 
   Future<List<ClothItem>> getTrendingClothItems() async {
-    List<ClothItem> listTrendingClothItems = [];
+    listTrendingClothItems.value = [];
     String? token = AppStorage().getString(SKeys.tokenUser);
     if (token != null && token.isNotEmpty) {
       try {
@@ -43,7 +59,7 @@ class HomeController extends GetxController {
   }
 
   Future<List<ClothItem>> getAllClothItems() async {
-    List<ClothItem> listAllClothItems = [];
+    listAllClothItems.value = [];
     String? token = AppStorage().getString(SKeys.tokenUser);
     if (token != null && token.isNotEmpty) {
       try {
