@@ -21,7 +21,7 @@ class DashboardFragmentsBinding extends Bindings {
     Get.lazyPut<FavoritesController>(() => FavoritesController());
 
     //Oder
-    Get.lazyPut<OderController>(() => OderController());
+    Get.lazyPut<OrderController>(() => OrderController());
 
     //Profile
     Get.lazyPut<ProfileController>(() => ProfileController());

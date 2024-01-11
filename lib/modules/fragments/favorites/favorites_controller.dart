@@ -19,8 +19,8 @@ class FavoritesController extends GetxController {
   RxList<FavoriteData> favoriteList = <FavoriteData>[].obs;
 
   @override
-  void onInit() {
-    initData();
+  void onInit() async {
+    await initData();
     super.onInit();
   }
 

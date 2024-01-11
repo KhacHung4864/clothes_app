@@ -9,6 +9,8 @@ import 'package:clothes_app/modules/authentication/signup/signup_screen.dart';
 import 'package:clothes_app/modules/cart/cart_screen.dart';
 import 'package:clothes_app/modules/fragments/dashboard_fragments_binding.dart';
 import 'package:clothes_app/modules/fragments/dashboard_fragments_screen.dart';
+import 'package:clothes_app/modules/fragments/order/order_now_screen.dart';
+import 'package:clothes_app/modules/fragments/order/order_screen.dart';
 import 'package:clothes_app/modules/item/item_details_screen.dart';
 import 'package:clothes_app/modules/item/search_item/search_item_screen.dart';
 import 'package:clothes_app/routes/app_pages.dart';
@@ -44,6 +46,17 @@ class AppPages {
     GetPage(
       name: Routes.dashBoardFragment,
       page: () => const DashboardFragmentsScreen(),
+      binding: DashboardFragmentsBinding(),
+    ),
+    GetPage(
+      name: Routes.order,
+      page: () => const OrderScreen(),
+      binding: DashboardFragmentsBinding(),
+    ),
+
+    GetPage(
+      name: Routes.orderNow,
+      page: () => const OrderNowScreen(),
       binding: DashboardFragmentsBinding(),
     ),
 

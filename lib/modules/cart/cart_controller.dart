@@ -5,6 +5,7 @@ import 'package:clothes_app/data/model/cart_model.dart';
 import 'package:clothes_app/data/network/api/cart_api/cart_api.dart';
 import 'package:clothes_app/data/network/service/api_exception.dart';
 import 'package:clothes_app/modules/fragments/dashboard_fragments_controller.dart';
+import 'package:clothes_app/modules/fragments/home/home_controller.dart';
 import 'package:clothes_app/utils/share_components/dialog/dialog.dart';
 import 'package:dio/dio.dart';
 import 'package:get/get.dart';
@@ -12,6 +13,7 @@ import 'package:get/get.dart';
 class CartController extends GetxController {
   final CartApi _cartApi = CartApi();
   final DashboardFragmentsController dashboardFragmentsController = Get.find();
+  final HomeController homeController = Get.find();
 
   RxList<CartData> cartList = <CartData>[].obs;
   RxList<int> selectedItemList = <int>[].obs;

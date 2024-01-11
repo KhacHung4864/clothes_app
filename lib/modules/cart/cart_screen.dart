@@ -2,6 +2,7 @@ import 'package:clothes_app/configs/app_fonts.dart';
 import 'package:clothes_app/configs/palette.dart';
 import 'package:clothes_app/gen/assets.gen.dart';
 import 'package:clothes_app/modules/cart/cart_controller.dart';
+import 'package:clothes_app/routes/app_pages.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -141,12 +142,89 @@ class CartScreen extends GetView<CartController> {
                     );
                   },
                 ),
+        ),
+        bottomNavigationBar: Obx(
+          () => Container(
+            decoration: const BoxDecoration(
+              color: Colors.black,
+              boxShadow: [
+                BoxShadow(
+                  offset: Offset(0, -3),
+                  color: Colors.white24,
+                  blurRadius: 6,
+                ),
+              ],
+            ),
+            padding: const EdgeInsets.symmetric(
+              horizontal: 16,
+              vertical: 8,
+            ),
+            child: Row(
+              children: [
+                //total amount
+                const Text(
+                  "Total Amount:",
+                  style: TextStyle(
+                    fontSize: 14,
+                    color: Colors.white38,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                const SizedBox(width: 4),
+                Obx(
+                  () => Text(
+                    "\$ ${controller.total.toStringAsFixed(2)}",
+                    maxLines: 1,
+                    style: const TextStyle(
+                      color: Colors.white70,
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+
+                const Spacer(),
+
+                //order now btn
+                Material(
+                  color: controller.selectedItemList.isNotEmpty ? Colors.purpleAccent : Colors.white24,
+                  borderRadius: BorderRadius.circular(30),
+                  child: InkWell(
+                    onTap: () {
+                      if (controller.selectedItemList.isNotEmpty) {
+                        Get.toNamed(Routes.orderNow);
+                      }
+                    },
+                    child: const Padding(
+                      padding: EdgeInsets.symmetric(
+                        horizontal: 20,
+                        vertical: 8,
+                      ),
+                      child: Text(
+                        "Order Now",
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 14,
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
         ));
   }
 
   GestureDetector cartItem(int index) {
     return GestureDetector(
-      onTap: () {},
+      onTap: () {
+        for (var element in controller.homeController.listAllClothItems) {
+          if (element.itemId == controller.cartList[index].itemId) {
+            Get.toNamed(Routes.itemDetails, arguments: element);
+          }
+        }
+      },
       child: Container(
         margin: EdgeInsets.fromLTRB(
           0,
