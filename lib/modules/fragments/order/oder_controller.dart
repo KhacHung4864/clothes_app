@@ -28,6 +28,7 @@ class OrderController extends GetxController {
   }
 
   getSelectedCartListItemsInformation() {
+    totalAmount.value = cartController.total.value;
     for (var selectedCartListItem in cartController.cartList) {
       if (cartController.selectedItemList.contains(selectedCartListItem.cartId)) {
         selectedCartListItemsInfo.add(selectedCartListItem);

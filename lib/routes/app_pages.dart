@@ -12,4 +12,5 @@ class Routes {
   static const searchSreen = '/searchSreen';
   static const order = '/oder';
   static const orderNow = '/oderNow';
+  static const orderConfirmation = '/orderConfirmation';
 }

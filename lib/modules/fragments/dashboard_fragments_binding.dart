@@ -1,4 +1,5 @@
 import 'package:clothes_app/modules/cart/cart_controller.dart';
+import 'package:clothes_app/modules/fragments/order/order_confirmation/order_confirmation_controller.dart';
 import 'package:clothes_app/modules/item/search_item/search_item_controller.dart';
 import 'package:get/get.dart';
 
@@ -36,5 +37,7 @@ class DashboardFragmentsBinding extends Bindings {
     //Cart
     Get.lazyPut<CartController>(() => CartController());
     // Get.put(CartController());
+
+    Get.lazyPut<OrderConfirmationController>(() => OrderConfirmationController());
   }
 }

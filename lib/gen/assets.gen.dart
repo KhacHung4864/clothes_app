@@ -29,12 +29,16 @@ class $AssetsImagesGen {
   AssetGenImage get register =>
       const AssetGenImage('assets/images/register.jpg');
 
+  /// File path: assets/images/transaction.png
+  AssetGenImage get transaction =>
+      const AssetGenImage('assets/images/transaction.png');
+
   /// File path: assets/images/woman.png
   AssetGenImage get woman => const AssetGenImage('assets/images/woman.png');
 
   /// List of all assets
   List<AssetGenImage> get values =>
-      [admin, login, man, placeHolder, register, woman];
+      [admin, login, man, placeHolder, register, transaction, woman];
 }
 
 class $AssetsSvgGen {

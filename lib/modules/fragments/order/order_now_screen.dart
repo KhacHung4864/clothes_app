@@ -1,5 +1,10 @@
+import 'package:clothes_app/configs/palette.dart';
+import 'package:clothes_app/data/model/cart_model.dart';
+import 'package:clothes_app/gen/assets.gen.dart';
 import 'package:clothes_app/modules/fragments/order/oder_controller.dart';
+import 'package:clothes_app/routes/app_pages.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 
 class OrderNowScreen extends GetView<OrderController> {
@@ -16,6 +21,7 @@ class OrderNowScreen extends GetView<OrderController> {
       ),
       body: ListView(
         children: [
+          displaySelectedItemsFromUserCart(),
           const SizedBox(height: 30),
 
           //delivery system
@@ -115,20 +121,12 @@ class OrderNowScreen extends GetView<OrderController> {
               borderRadius: BorderRadius.circular(30),
               child: InkWell(
                 onTap: () {
-                  // if (phoneNumberController.text.isNotEmpty && shipmentAddressController.text.isNotEmpty) {
-                  //   Get.to(OrderConfirmationScreen(
-                  //     selectedCartIDs: selectedCartIDs,
-                  //     selectedCartListItemsInfo: selectedCartListItemsInfo,
-                  //     totalAmount: totalAmount,
-                  //     deliverySystem: controller.deliverySys,
-                  //     paymentSystem: controller.paymentSys,
-                  //     phoneNumber: phoneNumberController.text,
-                  //     shipmentAddress: shipmentAddressController.text,
-                  //     note: noteToSellerController.text,
-                  //   ));
-                  // } else {
-                  //   Fluttertoast.showToast(msg: "Please complete the form.");
-                  // }
+                  if (controller.phoneNumberController.text.isNotEmpty && controller.shipmentAddressController.text.isNotEmpty) {
+                    Get.toNamed(Routes.orderConfirmation);
+                  } else {
+                    Fluttertoast.cancel();
+                    Fluttertoast.showToast(msg: "Please complete the form.");
+                  }
                 },
                 borderRadius: BorderRadius.circular(30),
                 child: Padding(
@@ -164,6 +162,130 @@ class OrderNowScreen extends GetView<OrderController> {
           const SizedBox(height: 30),
         ],
       ),
+    );
+  }
+
+  displaySelectedItemsFromUserCart() {
+    return Column(
+      children: List.generate(controller.selectedCartListItemsInfo.length, (index) {
+        CartData eachSelectedItem = controller.selectedCartListItemsInfo[index];
+
+        return Container(
+          margin: EdgeInsets.fromLTRB(
+            16,
+            index == 0 ? 16 : 8,
+            16,
+            index == controller.selectedCartListItemsInfo.length - 1 ? 16 : 8,
+          ),
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(20),
+            color: Colors.white24,
+            boxShadow: const [
+              BoxShadow(
+                offset: Offset(0, 0),
+                blurRadius: 6,
+                color: Colors.black26,
+              ),
+            ],
+          ),
+          child: Row(
+            children: [
+              //image
+              ClipRRect(
+                borderRadius: const BorderRadius.only(
+                  topLeft: Radius.circular(20),
+                  bottomLeft: Radius.circular(20),
+                ),
+                child: FadeInImage(
+                  height: 150,
+                  width: 130,
+                  fit: BoxFit.cover,
+                  placeholder: Assets.images.placeHolder.provider(),
+                  image: NetworkImage(eachSelectedItem.image ?? ''),
+                  imageErrorBuilder: (context, error, stackTrace) {
+                    return const Center(
+                      child: Icon(
+                        Icons.broken_image_outlined,
+                        color: Palette.white,
+                      ),
+                    );
+                  },
+                ),
+              ),
+
+              //name
+              //size
+              //price
+              Expanded(
+                child: Padding(
+                  padding: const EdgeInsets.all(8),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      //name
+                      Text(
+                        eachSelectedItem.name ?? "",
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        style: const TextStyle(
+                          fontSize: 18,
+                          color: Colors.white70,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+
+                      const SizedBox(height: 16),
+
+                      //size + color
+                      Text(
+                        "${eachSelectedItem.size!.replaceAll("[", "").replaceAll("]", "")}\n${eachSelectedItem.color!.replaceAll("[", "").replaceAll("]", "")}",
+                        maxLines: 2,
+                        overflow: TextOverflow.ellipsis,
+                        style: const TextStyle(
+                          color: Colors.white54,
+                        ),
+                      ),
+
+                      const SizedBox(height: 16),
+
+                      //price
+                      Text(
+                        "\$ ${eachSelectedItem.quantity! * eachSelectedItem.price!}",
+                        overflow: TextOverflow.ellipsis,
+                        style: const TextStyle(
+                          fontSize: 18,
+                          color: Colors.purpleAccent,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+
+                      Text(
+                        "${eachSelectedItem.price} x ${eachSelectedItem.quantity} = ${eachSelectedItem.quantity! * eachSelectedItem.price!}",
+                        style: const TextStyle(
+                          color: Colors.grey,
+                          fontSize: 12,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+
+              //quantity
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Text(
+                  "Q: ${eachSelectedItem.quantity}",
+                  style: const TextStyle(
+                    fontSize: 24,
+                    color: Colors.purpleAccent,
+                  ),
+                ),
+              ),
+            ],
+          ),
+        );
+      }),
     );
   }
 
