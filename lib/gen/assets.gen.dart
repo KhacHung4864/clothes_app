@@ -15,11 +15,19 @@ class $AssetsImagesGen {
   /// File path: assets/images/admin.jpg
   AssetGenImage get admin => const AssetGenImage('assets/images/admin.jpg');
 
+  /// File path: assets/images/history_icon.png
+  AssetGenImage get historyIcon =>
+      const AssetGenImage('assets/images/history_icon.png');
+
   /// File path: assets/images/login.jpg
   AssetGenImage get login => const AssetGenImage('assets/images/login.jpg');
 
   /// File path: assets/images/man.png
   AssetGenImage get man => const AssetGenImage('assets/images/man.png');
+
+  /// File path: assets/images/orders_icon.png
+  AssetGenImage get ordersIcon =>
+      const AssetGenImage('assets/images/orders_icon.png');
 
   /// File path: assets/images/place_holder.png
   AssetGenImage get placeHolder =>
@@ -37,8 +45,17 @@ class $AssetsImagesGen {
   AssetGenImage get woman => const AssetGenImage('assets/images/woman.png');
 
   /// List of all assets
-  List<AssetGenImage> get values =>
-      [admin, login, man, placeHolder, register, transaction, woman];
+  List<AssetGenImage> get values => [
+        admin,
+        historyIcon,
+        login,
+        man,
+        ordersIcon,
+        placeHolder,
+        register,
+        transaction,
+        woman
+      ];
 }
 
 class $AssetsSvgGen {

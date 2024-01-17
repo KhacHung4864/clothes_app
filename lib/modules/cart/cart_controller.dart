@@ -62,6 +62,9 @@ class CartController extends GetxController {
   getCartList() async {
     isLoading.value = true;
     cartList.value = [];
+    selectedItemList.clear();
+    isSelectedAll = false.obs;
+    total = 0.0.obs;
     int currentUserId = int.parse(dashboardFragmentsController.currentUser.value!.userId!);
     String? token = AppStorage().getString(SKeys.tokenUser);
     try {

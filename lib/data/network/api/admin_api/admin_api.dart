@@ -53,4 +53,17 @@ class AdminApi {
       rethrow;
     }
   }
+
+  Future<Response> callAdminOrderList({Map<String, dynamic>? data, bool isShowLoading = true}) async {
+    try {
+      final Response response = await _apiService.post(
+        AppUrl.readOrderAdmin,
+        data: data,
+        isShowLoading: isShowLoading,
+      );
+      return response;
+    } catch (e) {
+      rethrow;
+    }
+  }
 }

@@ -95,53 +95,67 @@ class CartScreen extends GetView<CartController> {
           ],
         ),
         body: Obx(
-          () => controller.cartList.isEmpty && !controller.isLoading.value
-              ? Center(
-                  child: Text(
-                    'Cart is Empty',
-                    style: AppFont.t.grey.s(15),
-                  ),
-                )
-              : ListView.builder(
-                  itemCount: controller.cartList.length,
-                  itemBuilder: (BuildContext context, int index) {
-                    return SizedBox(
-                      width: MediaQuery.of(context).size.width,
-                      child: Row(
-                        children: [
-                          //check box
-                          GetBuilder(
-                            init: controller,
-                            builder: (controller) {
-                              return IconButton(
-                                onPressed: () {
-                                  if (controller.selectedItemList.contains(controller.cartList[index].cartId)) {
-                                    controller.deleteSelectedItem(controller.cartList[index].cartId!);
-                                  } else {
-                                    controller.addSelectedItem(controller.cartList[index].cartId!);
-                                  }
-                                  controller.calculateTotalAmount();
-                                },
-                                icon: Icon(
-                                  controller.selectedItemList.contains(controller.cartList[index].cartId) ? Icons.check_box : Icons.check_box_outline_blank,
-                                  color: controller.isSelectedAll.value ? Colors.white : Colors.grey,
-                                ),
-                              );
-                            },
-                          ),
-
-                          //name
-                          //color size + price
-                          //+ 2 -
-                          //image
-                          Expanded(
-                            child: cartItem(index),
-                          ),
-                        ],
+          () => Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              controller.cartList.isEmpty && !controller.isLoading.value
+                  ? Padding(
+                      padding: const EdgeInsets.only(left: 40),
+                      child: Text(
+                        'Cart is Empty',
+                        style: AppFont.t.grey.s(15),
                       ),
-                    );
+                    )
+                  : const SizedBox.shrink(),
+              Expanded(
+                child: RefreshIndicator(
+                  onRefresh: () async {
+                    await controller.getCartList();
                   },
+                  child: ListView.builder(
+                    itemCount: controller.cartList.length,
+                    itemBuilder: (BuildContext context, int index) {
+                      return SizedBox(
+                        width: MediaQuery.of(context).size.width,
+                        child: Row(
+                          children: [
+                            //check box
+                            GetBuilder(
+                              init: controller,
+                              builder: (controller) {
+                                return IconButton(
+                                  onPressed: () {
+                                    if (controller.selectedItemList.contains(controller.cartList[index].cartId)) {
+                                      controller.deleteSelectedItem(controller.cartList[index].cartId!);
+                                    } else {
+                                      controller.addSelectedItem(controller.cartList[index].cartId!);
+                                    }
+                                    controller.calculateTotalAmount();
+                                  },
+                                  icon: Icon(
+                                    controller.selectedItemList.contains(controller.cartList[index].cartId) ? Icons.check_box : Icons.check_box_outline_blank,
+                                    color: controller.isSelectedAll.value ? Colors.white : Colors.grey,
+                                  ),
+                                );
+                              },
+                            ),
+
+                            //name
+                            //color size + price
+                            //+ 2 -
+                            //image
+                            Expanded(
+                              child: cartItem(index),
+                            ),
+                          ],
+                        ),
+                      );
+                    },
+                  ),
                 ),
+              ),
+            ],
+          ),
         ),
         bottomNavigationBar: Obx(
           () => Container(

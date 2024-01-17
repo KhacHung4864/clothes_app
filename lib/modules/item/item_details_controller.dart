@@ -88,13 +88,10 @@ class ItemDetailController extends GetxController {
 
   void deleteItemFromFavoriteList() async {
     String? token = AppStorage().getString(SKeys.tokenUser);
-    CartData cartInfo = CartData(
-      userId: int.parse(dashboardFragmentsController.currentUser.value!.userId!),
-      itemId: clothItem.itemId,
-      token: token,
-    );
     try {
-      final response = await _cartApi.callDeleteFavorite(data: cartInfo.toJson());
+      final response = await _cartApi.callDeleteFavorite(
+        data: {'user_id': int.parse(dashboardFragmentsController.currentUser.value!.userId!), 'item_id': clothItem.itemId, 'token': token},
+      );
       CartModel resData = CartModel.fromJson(jsonDecode(response.data));
       if (response.statusCode == 200) {
         if (resData.status == 'success') {

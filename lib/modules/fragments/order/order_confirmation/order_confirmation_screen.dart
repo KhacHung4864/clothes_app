@@ -100,7 +100,7 @@ class OrderConfirmationScreen extends GetView<OrderConfirmationController> {
                     onTap: () {
                       if (controller.imageSelectedByte.isNotEmpty) {
                         //save order info
-                        //saveNewOrderInfo();
+                        controller.saveNewOrderInfo();
                       } else {
                         Fluttertoast.showToast(msg: "Please attach the transaction proof / screenshot.");
                       }

@@ -25,6 +25,9 @@ class SearchItemController extends GetxController {
     super.onInit();
   }
 
+  @override
+  void onClose() {}
+
   Future<void> getSearchItems() async {
     isLoading.value = true;
     searchList.value = [];

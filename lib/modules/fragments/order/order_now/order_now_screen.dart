@@ -1,13 +1,13 @@
 import 'package:clothes_app/configs/palette.dart';
 import 'package:clothes_app/data/model/cart_model.dart';
 import 'package:clothes_app/gen/assets.gen.dart';
-import 'package:clothes_app/modules/fragments/order/oder_controller.dart';
+import 'package:clothes_app/modules/fragments/order/order_now/oder_now_controller.dart';
 import 'package:clothes_app/routes/app_pages.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 
-class OrderNowScreen extends GetView<OrderController> {
+class OrderNowScreen extends GetView<OrderNowController> {
   const OrderNowScreen({super.key});
 
   @override

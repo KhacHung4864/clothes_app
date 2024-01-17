@@ -106,4 +106,43 @@ class CartApi {
       rethrow;
     }
   }
+
+  Future<Response> callAddNewOrder({Map<String, dynamic>? data}) async {
+    try {
+      final Response response = await _apiService.post(
+        AppUrl.neworder,
+        data: data,
+        isShowLoading: false,
+      );
+      return response;
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  Future<Response> callOrderList({Map<String, dynamic>? data, bool isShowLoading = true}) async {
+    try {
+      final Response response = await _apiService.post(
+        AppUrl.readOrder,
+        data: data,
+        isShowLoading: isShowLoading,
+      );
+      return response;
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  Future<Response> updateStatusItem({Map<String, dynamic>? data, bool isShowLoading = true}) async {
+    try {
+      final Response response = await _apiService.post(
+        AppUrl.updateStatusOrder,
+        data: data,
+        isShowLoading: isShowLoading,
+      );
+      return response;
+    } catch (e) {
+      rethrow;
+    }
+  }
 }

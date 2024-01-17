@@ -13,4 +13,6 @@ class Routes {
   static const order = '/oder';
   static const orderNow = '/oderNow';
   static const orderConfirmation = '/orderConfirmation';
+  static const orderDetail = '/orderDetail';
+  static const orderAdmin = '/orderAdmin';
 }

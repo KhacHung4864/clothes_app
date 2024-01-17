@@ -280,8 +280,9 @@ class HomeScreen extends GetView<HomeController> {
       controller: controller.searchController,
       decoration: InputDecoration(
         prefixIcon: IconButton(
-          onPressed: () {
-            Get.toNamed(Routes.searchSreen, arguments: controller.searchController.text.trim());
+          onPressed: () async {
+            await Get.toNamed(Routes.searchSreen, arguments: controller.searchController.text.trim());
+            controller.searchController.clear();
           },
           icon: const Icon(
             Icons.search,

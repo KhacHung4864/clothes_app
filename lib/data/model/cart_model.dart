@@ -39,7 +39,6 @@ class CartData {
   List<String>? colors;
   String? description;
   String? image;
-  String? token;
 
   CartData({
     this.cartId,
@@ -56,7 +55,6 @@ class CartData {
     this.colors,
     this.description,
     this.image,
-    this.token,
   });
 
   CartData.fromJson(Map<String, dynamic> json) {
@@ -83,7 +81,9 @@ class CartData {
     _data["quantity"] = quantity;
     _data["color"] = color;
     _data["size"] = size;
-    _data["token"] = token;
+    _data["image"] = image;
+    _data["name"] = name;
+    _data["price"] = price;
     return _data;
   }
 }

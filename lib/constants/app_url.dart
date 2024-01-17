@@ -9,6 +9,8 @@ class AppUrl {
 
   static const String logInAdmin = "$admin/login.php";
 
+  static const String readOrderAdmin = "$admin/read_orders.php";
+
   //user url
   static const String users = "$baseUrl/user";
 
@@ -58,4 +60,15 @@ class AppUrl {
   static const String validateFavorite = '$favorite/validate_favorite.php';
 
   static const String readFavorite = '$favorite/read.php';
+
+  //order
+  static const String order = "$baseUrl/order";
+
+  static const String neworder = "$order/add.php";
+
+  static const String readOrder = "$order/read.php";
+
+  static const String updateStatusOrder = "$order/update_status.php";
+
+  static const hostImages = "$baseUrl/transactions_proof_images/";
 }

@@ -4,7 +4,7 @@ import 'package:clothes_app/modules/cart/cart_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class OrderController extends GetxController {
+class OrderNowController extends GetxController {
   final CartApi cartApi = CartApi();
   final CartController cartController = Get.find();
 
@@ -19,7 +19,6 @@ class OrderController extends GetxController {
 
   RxList<CartData> selectedCartListItemsInfo = <CartData>[].obs;
   Rx<double> totalAmount = 0.0.obs;
-  RxList<int> selectedCartIDs = <int>[].obs;
 
   @override
   void onInit() async {

@@ -4,6 +4,7 @@ import 'package:clothes_app/configs/app_fonts.dart';
 import 'package:clothes_app/configs/palette.dart';
 import 'package:clothes_app/modules/admin/upload/upload_items_controller.dart';
 import 'package:clothes_app/modules/authentication/widget/text_form_field_widget.dart';
+import 'package:clothes_app/routes/app_pages.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -22,8 +23,31 @@ class AdminUploadItemsScreen extends GetView<AdminUploadItemsController> {
   Scaffold defaultScreen() {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Welcome Admin'),
-        centerTitle: true,
+        title: GestureDetector(
+          onTap: () {
+            Get.toNamed(Routes.orderAdmin);
+          },
+          child: const Text(
+            "New Orders",
+            style: TextStyle(
+              color: Colors.green,
+              fontSize: 16,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+        ),
+        actions: [
+          IconButton(
+            onPressed: () {
+              Get.back();
+            },
+            icon: const Icon(
+              Icons.logout,
+              color: Colors.redAccent,
+            ),
+          ),
+        ],
+        centerTitle: false,
         automaticallyImplyLeading: false,
         flexibleSpace: Container(
           decoration: const BoxDecoration(
