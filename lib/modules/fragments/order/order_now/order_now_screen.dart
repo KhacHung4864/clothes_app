@@ -64,14 +64,6 @@ class OrderNowScreen extends GetView<OrderNowController> {
                   ),
                 ),
                 SizedBox(height: 2),
-                Text(
-                  'Company Account Number / ID: \nY87Y-HJF9-CVBN-4321',
-                  style: TextStyle(
-                    fontSize: 14,
-                    color: Colors.white38,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
               ],
             ),
           ),

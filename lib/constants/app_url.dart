@@ -68,6 +68,8 @@ class AppUrl {
 
   static const String readOrder = "$order/read.php";
 
+  static const String readHistoryOrder = "$order/read_history.php";
+
   static const String updateStatusOrder = "$order/update_status.php";
 
   static const hostImages = "$baseUrl/transactions_proof_images/";

@@ -13,6 +13,7 @@ import 'package:clothes_app/modules/fragments/dashboard_fragments_binding.dart';
 import 'package:clothes_app/modules/fragments/dashboard_fragments_screen.dart';
 import 'package:clothes_app/modules/fragments/order/order_confirmation/order_confirmation_screen.dart';
 import 'package:clothes_app/modules/fragments/order/order_detail/order_detail_screen.dart';
+import 'package:clothes_app/modules/fragments/order/order_history/order_history_screen.dart';
 import 'package:clothes_app/modules/fragments/order/order_now/order_now_screen.dart';
 import 'package:clothes_app/modules/fragments/order/order_screen.dart';
 import 'package:clothes_app/modules/item/item_details_screen.dart';
@@ -76,6 +77,11 @@ class AppPages {
     GetPage(
       name: Routes.orderDetail,
       page: () => const OrderDetailScreen(),
+      binding: DashboardFragmentsBinding(),
+    ),
+    GetPage(
+      name: Routes.orderHistory,
+      page: () => const OrderHistoryScreen(),
       binding: DashboardFragmentsBinding(),
     ),
 

@@ -16,11 +16,14 @@ class OrderController extends GetxController {
   final DashboardFragmentsController dashboardFragmentsController = Get.find();
 
   RxList<OrderData> orderList = <OrderData>[].obs;
+  RxList<OrderData> orderHistoryList = <OrderData>[].obs;
+
   RxBool isLoading = false.obs;
 
   @override
   void onInit() async {
     getCurrentUserorderList();
+    getHistorytUserorderList(isShowLoading: false);
     super.onInit();
   }
 
@@ -39,6 +42,36 @@ class OrderController extends GetxController {
         if (resData.status == 'success') {
           resData.data?.forEach((record) {
             orderList.add(record);
+          });
+        } else {
+          showError(resData.message);
+        }
+      } else {
+        showError(resData.message);
+      }
+    } on DioException catch (e) {
+      final ApiException apiException = ApiException.fromDioError(e);
+      throw apiException;
+    } finally {
+      isLoading.value = false;
+    }
+  }
+
+  Future<void> getHistorytUserorderList({bool isShowLoading = true}) async {
+    isLoading.value = true;
+    orderHistoryList.value = [];
+    int currentUserId = int.parse(dashboardFragmentsController.currentUser.value!.userId!);
+    String? token = AppStorage().getString(SKeys.tokenUser);
+    try {
+      final response = await cartApi.callOrderHistoryList(
+        data: {'user_id': currentUserId, 'token': token},
+        isShowLoading: isShowLoading,
+      );
+      OrderModel resData = OrderModel.fromJson(jsonDecode(response.data));
+      if (response.statusCode == 200) {
+        if (resData.status == 'success') {
+          resData.data?.forEach((record) {
+            orderHistoryList.add(record);
           });
         } else {
           showError(resData.message);

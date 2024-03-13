@@ -7,8 +7,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
-class OrderScreen extends GetView<OrderController> {
-  const OrderScreen({super.key});
+class OrderHistoryScreen extends GetView<OrderController> {
+  const OrderHistoryScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -17,44 +17,33 @@ class OrderScreen extends GetView<OrderController> {
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          //Order image       //history image
+          //myOrder title     //history title
           Padding(
             padding: const EdgeInsets.fromLTRB(16, 24, 8, 0),
             child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 //order icon image
                 // my orders
-                Column(
-                  children: [
-                    Assets.images.ordersIcon.image(width: 140.w),
-                    const Text(
-                      "My Orders",
-                      style: TextStyle(
-                        color: Colors.purpleAccent,
-                        fontSize: 24,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ],
-                ),
 
                 //history icon image
                 // history
                 GestureDetector(
                   onTap: () {
                     //send user to orders history screen
-                    Get.toNamed(Routes.orderHistory);
                   },
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Column(
                       children: [
-                        Assets.images.historyIcon.image(width: 45.w),
+                        Assets.images.historyIcon.image(width: 140.w),
+                        const SizedBox(height: 10),
                         const Text(
-                          "History",
+                          "My History",
                           style: TextStyle(
                             color: Colors.purpleAccent,
-                            fontSize: 12,
+                            fontSize: 24,
                             fontWeight: FontWeight.bold,
                           ),
                         ),
@@ -73,7 +62,7 @@ class OrderScreen extends GetView<OrderController> {
                 : Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 30.0),
                     child: Text(
-                      controller.orderList.isEmpty ? "No order item found" : "Here are your successfully placed orders.",
+                      controller.orderHistoryList.isEmpty ? "No order item found" : "Here are your successfully received parcels.",
                       style: const TextStyle(
                         fontSize: 16,
                         color: Colors.white,
@@ -95,7 +84,7 @@ class OrderScreen extends GetView<OrderController> {
   Widget displayOrdersList(context) {
     return RefreshIndicator(
       onRefresh: () async {
-        await controller.getCurrentUserorderList();
+        await controller.getHistorytUserorderList();
       },
       child: ListView.separated(
         padding: const EdgeInsets.all(16),
@@ -105,9 +94,9 @@ class OrderScreen extends GetView<OrderController> {
             thickness: 1,
           );
         },
-        itemCount: controller.orderList.length,
+        itemCount: controller.orderHistoryList.length,
         itemBuilder: (context, index) {
-          OrderData eachOrderData = controller.orderList[index];
+          OrderData eachOrderData = controller.orderHistoryList[index];
 
           return Card(
             color: Colors.white24,

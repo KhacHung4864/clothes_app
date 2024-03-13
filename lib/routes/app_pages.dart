@@ -14,5 +14,6 @@ class Routes {
   static const orderNow = '/oderNow';
   static const orderConfirmation = '/orderConfirmation';
   static const orderDetail = '/orderDetail';
+  static const orderHistory = '/orderHistory';
   static const orderAdmin = '/orderAdmin';
 }

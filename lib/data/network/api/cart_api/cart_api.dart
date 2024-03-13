@@ -133,6 +133,19 @@ class CartApi {
     }
   }
 
+  Future<Response> callOrderHistoryList({Map<String, dynamic>? data, bool isShowLoading = true}) async {
+    try {
+      final Response response = await _apiService.post(
+        AppUrl.readHistoryOrder,
+        data: data,
+        isShowLoading: isShowLoading,
+      );
+      return response;
+    } catch (e) {
+      rethrow;
+    }
+  }
+
   Future<Response> updateStatusItem({Map<String, dynamic>? data, bool isShowLoading = true}) async {
     try {
       final Response response = await _apiService.post(
